@@ -34,7 +34,7 @@ public class Jlox {
     BufferedReader reader = new BufferedReader(input);
 
     while (true) {
-      System.out.println("Jlox: $ ");
+      System.out.print("Jlox: $ ");
       String line = reader.readLine();
       if (line == null) break;
       run(line);
