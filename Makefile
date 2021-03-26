@@ -2,6 +2,7 @@ PROJECT_NAME=Jlox
 PROJECT_PATH=src/
 CLASS_PATH=./dist/class
 LIB_PATH=./lib
+OUTPUT_DIR=src/Jlox/Compiler
 
 FILES=$(shell find ${PROJECT_PATH} -name "*.java")
 
@@ -11,3 +12,6 @@ run: build
 build:
 	javac -d ${CLASS_PATH} ${FILES}
 	echo -e '\033[0;32mBuilding finished\033[0m'
+
+generate: build
+	java -cp ${LIB_PATH} -cp ${CLASS_PATH} tool/GenerateAst ${OUTPUT_DIR}
