@@ -41,15 +41,17 @@ public class Jlox {
       hadError = false;
     }
 
-    System.out.println("Jlox: Bye bye!");
+    System.out.println("\nJlox: Bye bye!");
   }
 
   public static void run(String code) throws IOException {
     Scanner scanner = new Scanner(code);
     List<Token> tokens = scanner.scanTokens();
-    for (Token token : tokens) {
-      System.out.println(token);
-    }
+    Parser parser = new Parser(tokens);
+    Expr expression = parser.parse();
+
+    if (hadError) return;
+    System.out.println(new AstPrinter().print(expression));
   }
 
   public static void error(int line, String message) {

@@ -9,6 +9,9 @@ FILES=$(shell find ${PROJECT_PATH} -name "*.java")
 run: build
 	java -cp ${LIB_PATH} -cp ${CLASS_PATH} ${PROJECT_NAME}/${PROJECT_NAME} ${ARGS}
 
+jar: build
+	jar -c -f ${PROJECT_NAME}.jar -e ${PROJECT_NAME}/${PROJECT_NAME} -C ${CLASS_PATH} ${PROJECT_NAME}
+
 build:
 	javac -d ${CLASS_PATH} ${FILES}
 	echo -e '\033[0;32mBuilding finished\033[0m'
