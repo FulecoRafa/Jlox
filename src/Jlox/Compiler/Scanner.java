@@ -82,6 +82,8 @@ public class Scanner {
       case '/':
         if (match('/')) {
           while(peek() != '\n' && !isAtEnd()) advance();
+        } else if(match('*')) {
+          blockComment();
         } else {
           addToken(SLASH);
         }
@@ -205,5 +207,21 @@ public class Scanner {
     TokenType type = keywords.get(text);
     if (type == null) type = IDENTIFIER;
     addToken(type);
+  }
+
+  private void blockComment() {
+    int ogLine = line;
+    while (true) {
+      while (peek() != '*') {
+        if (isAtEnd()) {
+          Jlox.error(ogLine, "Comment was not closed");
+          return;
+        }
+        if (peek() == '\n') line++;
+        advance();
+      }
+      advance();
+      if (match('/')) break;
+    }
   }
 }
